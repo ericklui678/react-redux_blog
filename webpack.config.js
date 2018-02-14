@@ -4,6 +4,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: __dirname + 'dist',
+    publicPath: '/',
     filename: 'app.bundle.js'
   },
   plugins: [
@@ -26,7 +27,7 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   devServer: {
-    // historyApiFallback: true,
+    historyApiFallback: true,
     contentBase: './',
   }
 };
