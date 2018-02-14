@@ -7,11 +7,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
   // I want react-router to look at the URL when deciding on displaying components
 // Route component is to provide configuration for URL like...
   // If I see this URL, show this component
+import promise from 'redux-promise';
 
 import reducers from './reducers';
 import PostsIndex from './components/posts_index';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 render(
   <Provider store={createStoreWithMiddleware(reducers)}>
