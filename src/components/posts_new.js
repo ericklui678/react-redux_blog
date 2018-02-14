@@ -28,12 +28,12 @@ class PostsNew extends Component {
       // label is just our own property that we can pass and render to field.label
       <form>
         <Field
-          label='Title'
+          label='Title For Post'
           name='title'
           component={this.renderField}
         />
         <Field
-          label='Tags'
+          label='Categories'
           name='tags'
           component={this.renderField}
         />
@@ -47,7 +47,28 @@ class PostsNew extends Component {
   }
 }
 
+// helper validate function to be passed to reduxForm
+// values argument is an object of input values
+// needs to return an object
+function validate(values) {
+  const errors = {};
+  // Validate the inputs from 'values'
+  if (!values.title || values.title.length < 3) {
+    errors.title = 'Enter a title that is at least 3 characters';
+  }
+  if (!values.categories) {
+    errors.categories = 'Enter some categories';
+  }
+  if (!values.content) {
+    errors.content = 'Enter some content';
+  }
+  // If errors is empty, the form is fine to submit
+  // If errors has any property, redux form assumes form is invalid
+  return errors;
+}
+
 export default reduxForm({
+  validate, // validate function is called when form is submitted
   // PostsNewForm is our unique name for this form
   // this is useful when having multiple forms in a page
   form: 'PostsNewForm'
