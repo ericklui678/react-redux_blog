@@ -20,7 +20,7 @@ class PostIndex extends Component {
     // need to convert object to an array of li elements using lodash
     return _.map(this.props.posts, post => {
       return (
-        <li className='list-group-item' key={post.id}>{post.title}</li>
+        <li className='list-group-item' key={post.id}>{post.id} - {post.title}</li>
       );
     });
   }

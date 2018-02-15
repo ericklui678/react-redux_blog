@@ -33,7 +33,14 @@ class PostsNew extends Component {
 
   // only called if no errors in form
   onSubmit(values) {
-    this.props.createPost(values);
+    // this component has access to props.history thanks to <Route /> in
+    // our main index.js
+    // props.history redirects back to route '/', but need to redirect
+      // AFTER the post or else we post same time we fetch data
+    
+    this.props.createPost(values, () => {
+      this.props.history.push('/');
+    });
   }
 
   render() {
