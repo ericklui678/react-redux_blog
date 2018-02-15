@@ -7,26 +7,45 @@ class PostsNew extends Component {
   // field argument is needed to know which field needs to be updated
   // ...field.input is a bunch of event handler templates so we don't have to
     // redundantly write it each time
+  // ternary operator for errors
+    // if field was 'touched', meaning user focused on input, then focused away
+      // show errors, otherwise show blank
   renderField(field) {
+    const { meta: { touched, error } } = field; // destructuring for nested obj
+
     return (
-      <div>
+      <div className='form-group'>
         <label>{field.label}</label>
         <input
           className='form-control'
           type='text'
           {...field.input}
         />
+        <div className='text-danger'>
+          {touched ? error : ''}
+        </div>
       </div>
     );
   }
 
+  // only called if no errors in form
+  onSubmit(values) {
+    console.log(values);
+  }
+
   render() {
+    const { handleSubmit } = this.props; // this.props.handleSubmit is a property passed to this component from redux-form
+
+    // redux-form only handles state of the form, you have to handle submit
     return (
       // Field component doesn't know how to show itself on the screen
       // only knows how to interact with redux
       // Component property is a function you have to define to render JSX
       // label is just our own property that we can pass and render to field.label
-      <form>
+      <form
+
+        onSubmit={handleSubmit(this.onSubmit.bind(this))}
+      >
         <Field
           label='Title For Post'
           name='title'
@@ -34,7 +53,7 @@ class PostsNew extends Component {
         />
         <Field
           label='Categories'
-          name='tags'
+          name='categories'
           component={this.renderField}
         />
         <Field
@@ -42,6 +61,7 @@ class PostsNew extends Component {
           name='content'
           component={this.renderField}
         />
+        <button type='submit' className='btn btn-primary'>Submit</button>
       </form>
     );
   }
