@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 // import 2 form helpers from redux-form
 // reduxForm is very similar to the 'connect' helper we've been wiring redux
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createPost } from '../actions/';
 
 class PostsNew extends Component {
   // field argument is needed to know which field needs to be updated
@@ -30,7 +33,7 @@ class PostsNew extends Component {
 
   // only called if no errors in form
   onSubmit(values) {
-    console.log(values);
+    this.props.createPost(values);
   }
 
   render() {
@@ -62,6 +65,7 @@ class PostsNew extends Component {
           component={this.renderField}
         />
         <button type='submit' className='btn btn-primary'>Submit</button>
+        <Link to='/' className='btn btn-danger'>Cancel</Link>
       </form>
     );
   }
@@ -92,4 +96,8 @@ export default reduxForm({
   // PostsNewForm is our unique name for this form
   // this is useful when having multiple forms in a page
   form: 'PostsNewForm'
-})(PostsNew);
+})(
+  connect(null, { createPost })(PostsNew)
+);
+
+// how to nest multiple connect helpers

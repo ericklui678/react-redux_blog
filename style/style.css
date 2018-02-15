@@ -1,0 +1,4 @@
+/* adds left margin to red cancel button */
+form a {
+  margin-left: 5px;
+}
